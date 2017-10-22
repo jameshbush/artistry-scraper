@@ -4,30 +4,63 @@ const http = require('http');
 
 const outwardFacing = (n) => Number(n) % 2 !== 0
 const topFloor = (n) => n[0] === '5'
-
-fs.readFile('./modals_html/edie.html', 'utf-8', (err, content) => {
-  if (!content)
-    return console.log('no file')
-
-  const $ = cheerio.load(content);
-  const unitNums =
-     $('.unit-col.unit .unit-col-text') // unit number table column
-      .text()
-      .match(/.{1,3}/g) // split into 3 char substrings
-      .sort()
+const consoleLogReport = (unitNums) => {
+  if (!unitNums) throw 'No unitNums'
 
   const desirableRooms = unitNums
     .filter(topFloor)
     .filter(outwardFacing)
+  const topFloorRooms = unitNums
+    .filter(topFloor)
+  const outwardFacingRooms = unitNums
+    .filter(outwardFacing)
 
   console.log(
-    `Rooms: ${unitNums.join(', ')}`,
-    `\n5th floor outward facing rooms: ${desirableRooms}`,
-    `\n5th floor rooms: ${unitNums.filter(topFloor)}`,
-    `\nOutward facing rooms: ${unitNums.filter(outwardFacing)}`)
+    [
+      `Rooms: ${unitNums.join(', ')}`,
+      `5th floor outward facing rooms: ${desirableRooms}`,
+      `5th floor rooms: ${topFloorRooms}`,
+      `Outward facing rooms: ${outwardFacingRooms}`
+    ].join("\n")
+  )
+}
+
+class modalParser {
+  constructor({ filePath, reportingStrategy }) {
+    this.filePath = filePath;
+    this.reportingStrategy = reportingStrategy;
+  }
+
+  parseModal() {
+    fs.readFile(this.filePath, 'utf-8', (err, content) => {
+      if (!content) throw `File "${this.filePath}" not found`
+
+      const $ = cheerio.load(content);
+      const unitNumElements = $('.unit-col.unit .unit-col-text')
+      const unitNums = unitNumElements
+          .text()
+          .match(/.{1,3}/g) // split in 3 char substrings
+          .sort()
+
+      this.reportingStrategy(unitNums)
+    });
+  }
+}
+
+reporterFactory = () => {
+  if (process.env.USER === 'JB') {
+    return consoleLogReport;
+  } else if (process.argv[2] === 'consoleLog') {
+    return consoleLogReport;
+  }
+}
+
+const parser = new modalParser({
+  filePath: './modals_html/edie.html',
+  reportingStrategy: reporterFactory(),
 })
 
-
+parser.parseModal()
 
 // http.get(createRequestObject(), (res) => {
 //   if (res.statusCode !== 200)
