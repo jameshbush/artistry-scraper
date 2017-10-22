@@ -1,6 +1,7 @@
 const cheerio = require('cheerio');
 const fs = require('fs');
 const http = require('http');
+const cmd=require('node-cmd');
 
 const outwardFacing = (n) => Number(n) % 2 !== 0
 const topFloor = (n) => n[0] === '5'
@@ -50,17 +51,30 @@ class modalParser {
 reporterFactory = () => {
   if (process.env.USER === 'JB') {
     return consoleLogReport;
-  } else if (process.argv[2] === 'consoleLog') {
-    return consoleLogReport;
   }
+  // else if (process.argv[2] === 'consoleLog') {
+  //   return consoleLogReport;
+  // }
 }
 
-const parser = new modalParser({
-  filePath: './modals_html/edie.html',
-  reportingStrategy: reporterFactory(),
-})
+parse = () => {
+  const parser = new modalParser({
+    filePath: './modals_html/edie.html',
+    reportingStrategy: reporterFactory(),
+  })
+  parser.parseModal()
+}
 
-parser.parseModal()
+(function curlReportToSys() {
+  if (process.argv[2] === 'curl') {
+    cmd.get(
+      `curl -g -H "Accept: application/html" -H "Content-Type: application/html" -X GET "www.artistryindy.com/?module=check_availability&property[id]=83354&action=view_unit_spaces&property_floorplan[id]=184396" > ./modals_html/edie.html`,
+      parse,
+    )
+  } else {
+    parse()
+  }
+})();
 
 // http.get(createRequestObject(), (res) => {
 //   if (res.statusCode !== 200)
