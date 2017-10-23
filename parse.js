@@ -15,11 +15,8 @@ edieParser = () => {
     let url = 'www.artistryindy.com/?module=check_availability&property[id]=83354&action=view_unit_spaces&property_floorplan[id]=184396';
     let flags = '-g -H "Accept: application/html" -H "Content-Type: application/html" -X';
     let target = './modals_html/edie.html';
-
-    cmd.get(
-      `curl ${flags} GET "${url}" > ${target}`,
-      callback, // (Promise)
-    );
+    let command = `curl ${flags} GET "${url}" > ${target}`;
+    cmd.get(command, callback);
   } else {
     callback();
   }

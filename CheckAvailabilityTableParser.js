@@ -47,12 +47,12 @@ class CheckAvailabilityTableParser {
   setReportContent() {
     if (this.unitNums && this.desirableRooms) {
       this.reportContent = [
-        `Rooms: ${this.unitNums.join(', ')}`,
-        `5th floor outward facing rooms: ${this.desirableRooms.bestRooms}`,
-        `5th floor rooms: ${this.desirableRooms.topFloorRooms}`,
-        `Outward facing rooms: ${this.desirableRooms.outwardFacingRooms}`,
+        `Rooms: [${this.unitNums.join(', ')}]`,
+        `Best rooms: [${this.desirableRooms.bestRooms.join(', ')}]`,
+        `5th floor rooms: [${this.desirableRooms.topFloorRooms.join(', ')}]`,
+        `Outward facing rooms: [${this.desirableRooms.outwardFacingRooms.join(', ')}]`,
       ]
-        .join('\n');
+        .join('\n\n');
     } else {
       this.reportContent = 'Error parsing desirable rooms from unit numbers';
     }
