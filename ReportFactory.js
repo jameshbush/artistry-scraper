@@ -1,6 +1,6 @@
-const consoleLogReport = (content) => (
+const consoleLogReport = (content) => {
   console.log(content);
-);
+};
 
 const ReporterFactory = () => {
   if (process.argv[3] === 'log')

@@ -19,9 +19,9 @@ class CheckAvailabilityTableParser {
       this.$ = cheerio.load(content);
 
       this.unitNums = this.$('.unit-col.unit .unit-col-text')
-          .text()
-          .match(/.{1,3}/g) // split into 3 char substrings
-          .sort();
+        .text()
+        .match(/.{1,3}/g) // split into 3 char substrings
+        .sort();
 
       this.desirableRooms = {
         bestRooms: (
@@ -52,7 +52,7 @@ class CheckAvailabilityTableParser {
         `5th floor rooms: ${this.desirableRooms.topFloorRooms}`,
         `Outward facing rooms: ${this.desirableRooms.outwardFacingRooms}`,
       ]
-        .join("\n");
+        .join('\n');
     } else {
       this.reportContent = 'Error parsing desirable rooms from unit numbers';
     }
