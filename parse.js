@@ -4,7 +4,7 @@ const CheckAvailabilityTableParser = require('./CheckAvailabilityTableParser')
 const ReportFactory = require('./ReportFactory')
 
 edieParser = () => {
-  new CheckAvailabilityTableParser({
+  return new CheckAvailabilityTableParser({
     filePath: './modals_html/edie.html',
     reportingStrategy: ReportFactory(),
   })
