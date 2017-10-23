@@ -1,26 +1,8 @@
-const cmd = require('node-cmd');
+var express = require('express');
+var app = express();
 
-const CheckAvailabilityTableParser = require('./CheckAvailabilityTableParser');
-const ReportFactory = require('./ReportFactory');
+app.set('port', (process.env.PORT || 5000));
 
-edieParser = () => {
-  return new CheckAvailabilityTableParser({
-    filePath: './modals_html/edie.html',
-    reportingStrategy: ReportFactory(),
-  })
-}
-
-(function curlToSys(callback) {
-  if (process.argv[2] === 'curl') {
-    let url = 'www.artistryindy.com/?module=check_availability&property[id]=83354&action=view_unit_spaces&property_floorplan[id]=184396';
-    let flags = '-g -H "Accept: application/html" -H "Content-Type: application/html" -X';
-    let target = './modals_html/edie.html';
-
-    cmd.get(
-      `curl ${flags} GET "${url}" > ${target}`,
-      callback, // (Promise)
-    );
-  } else {
-    callback();
-  }
-})(edieParser);
+app.listen(app.get('port'), function() {
+  console.log('Node app is running on port', app.get('port'));
+});
