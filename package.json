@@ -11,7 +11,7 @@
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node parse.js curl"
+    "start": "node index.js curl log"
   },
   "repository": {
     "type": "git",
