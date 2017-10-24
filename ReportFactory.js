@@ -7,9 +7,8 @@ const consoleLogReport = (rooms) => {
 const emailReport = (rooms) => {
   const { best } = rooms;
   const { MAILGUN_API_KEY, MAILGUN_MAILING_LIST } = process.env;
-  if (best.length === 0) return;
 
-  cmd.get(
+  (best.length > 0) && cmd.get(
     `curl -s --user 'api:${MAILGUN_API_KEY}' \
       https://api.mailgun.net/v3/sandbox872d5518654c45bfb6c145e6dc2bc058.mailgun.org/messages \
         -F from='atristryScraper@gmail.com>' \
@@ -24,6 +23,8 @@ const emailReport = (rooms) => {
       stderr && console.log('\nstderr:', stderr)
     }
   )
+
+  best.length > 0 ? console.log('Rooms Found') : console.log('Rooms Not Found');
 }
 
 const ReporterFactory = () => {
@@ -36,7 +37,6 @@ const ReporterFactory = () => {
 }
 
 function makeFullReport(rooms) {
-  console.log(rooms)
   if (rooms.available && rooms.best) {
     return [
       `Rooms: [${rooms.available.join(', ')}]`,
