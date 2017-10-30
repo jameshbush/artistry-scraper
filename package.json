@@ -1,19 +1,26 @@
 {
-  "name": "artistry-scraper",
+  "name": "artistry-scrsper",
   "version": "1.0.0",
-  "description": "",
+  "description": "Follow news you care about",
   "main": "index.js",
   "dependencies": {
+    "body-parser": "~1.18.2",
     "cheerio": "^1.0.0-rc.2",
-    "express": "^4.16.2",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "express": "~4.15.5",
+    "jade": "~1.11.0",
     "jquery": "^3.2.1",
-    "node-cmd": "^3.0.0"
+    "morgan": "~1.9.0",
+    "node-cmd": "^3.0.0",
+    "serve-favicon": "~2.4.5"
   },
-  "devDependencies": {},
+ "devDependencies": {
+ },
   "scripts": {
-    "start": "node index.js",
-    "parse": "node parse.js curl email",
-    "test": "node parse.js nocurl log"
+    "start": "PORT=3001 node bin/www",
+    "parse": "node ./parse_util/Parse.js curl email",
+    "test": "node --inspect ./parse_util/Parse.js nocurl log"
   },
   "repository": {
     "type": "git",

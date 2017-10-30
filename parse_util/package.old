@@ -1,0 +1,28 @@
+{
+  "name": "artistry-scraper",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.2",
+    "express": "^4.16.2",
+    "jquery": "^3.2.1",
+    "node-cmd": "^3.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "PORT=3001 node bin/www",
+    "parse": "node ./Parse.js curl email",
+    "test": "node ./Parse.js nocurl log"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jajajames/artistry-scraper.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jajajames/artistry-scraper/issues"
+  },
+  "homepage": "https://github.com/jajajames/artistry-scraper#readme"
+}
