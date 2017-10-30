@@ -12,12 +12,12 @@ const emailReport = (rooms) => {
     MAILGUN_MAILING_LIST,
   } = process.env;
 
-  (best.length >= 0) && cmd.get(
+  (best.length > 0) && cmd.get(
     `curl -s --user 'api:${MAILGUN_API_KEY}' \
       https://api.mailgun.net/v3/sandbox872d5518654c45bfb6c145e6dc2bc058.mailgun.org/messages \
         -F from='${MAILGUN_FROM_EMAIL}' \
         -F to='${MAILGUN_MAILING_LIST}' \
-        -F subject='Testing Mailgun Config' \
+        -F subject='Good Room Detected!' \
         -F text="The Best Rooms: ${best.join(', ')}"`,
 
     (err, data, stderr) => {
@@ -28,7 +28,7 @@ const emailReport = (rooms) => {
     }
   )
 
-  best.length > 0 ? console.log('Rooms Found') : console.log('Rooms Not Found');
+  console.log(`Rooms ${(best.length > 0) ? '' : "Not "}Found`);
 }
 
 const ReporterFactory = () => {
